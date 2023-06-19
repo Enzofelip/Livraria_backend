@@ -14,17 +14,17 @@ const port = process.env.PORT || 3001;
 
 const books = [];
 
- const fs = require("fs");
+//  const fs = require("fs");
 
- const removeOidImage = (book) => {
-     fs.unlink(`public/${book}`, (err) => {
-         if(err) {
-              console.log(err);
-         }else{
-             console.log("Imagem excluída do servidor")
-         }
-     })
- }
+//  const removeOidImage = (book) => {
+//      fs.unlink(`public/${book}`, (err) => {
+//          if(err) {
+//               console.log(err);
+//          }else{
+//              console.log("Imagem excluída do servidor")
+//          }
+//      })
+//  }
 
 
 app.get("/", (req, res) => {
@@ -38,7 +38,7 @@ app.get("/books", (req, res) => {
 app.post("/books",upload.single("image"), (req, res) => {
     const {title, name, description, select} = req.body;
 
-    const src = `images/${req.file.filename}`
+    // const src = `images/${req.file.filename}`
    
     const newBooks = {
         id: Math.random().toString(36),
@@ -46,7 +46,6 @@ app.post("/books",upload.single("image"), (req, res) => {
         name,
         description,
         select,
-        src,
         isCompleted: false,
     }
 
@@ -61,7 +60,7 @@ app.delete("/books/:id", (req, res) => {
 
     const index = books.findIndex((bok) => bok.id === id);
     
-    removeOidImage(index)
+    // removeOidImage(index)
    
     if(index < 0){
         return res.status(404).json({error})
